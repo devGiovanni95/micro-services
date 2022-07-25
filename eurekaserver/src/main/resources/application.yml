@@ -1,0 +1,15 @@
+#definindo a nome padrao da aplicacao
+spring:
+  application:
+    name: eurekaserver
+
+#definindo a porta padrao
+server:
+  port: 8761
+
+#para nao se registrar automaticamente
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
