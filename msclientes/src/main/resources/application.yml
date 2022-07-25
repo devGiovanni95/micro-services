@@ -1,1 +1,18 @@
+#definindo a nome padrao da aplicacao
+spring:
+  application:
+    name: msclientes
+
+#definindo a porta aleatorio
+server:
+  port: 0
+
+#para nao se registrar automaticamente
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+#  Pra gerar nomes definidos
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value} }
 
