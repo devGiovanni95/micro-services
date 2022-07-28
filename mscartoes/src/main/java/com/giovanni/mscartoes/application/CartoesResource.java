@@ -33,7 +33,7 @@ public class CartoesResource {
 
     //  /cartoes?renda=5000
     @GetMapping(params = "renda")
-    public ResponseEntity<List<Cartao>> getCartoesTendaAte(@RequestParam("renda") Long renda){
+    public ResponseEntity<List<Cartao>> getCartoesRendaAte(@RequestParam("renda") Long renda){
         List<Cartao> list = cartaoService.getCartoesRendaMenorIgual(renda);
         return ResponseEntity.ok(list);
     }
