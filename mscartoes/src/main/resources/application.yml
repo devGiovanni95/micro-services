@@ -1,6 +1,12 @@
 spring:
   application:
     name: mscartoes
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 
 server:
   port: 0
@@ -13,6 +19,13 @@ eureka:
   instance:
         instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value} }
 
+mq:
+  queues:
+    emissao-cartoes: emissao-cartoes
 
 
 
+#    definindo as configurações para conexao com as filas de mensageria
+
+
+#Definindo as filas criadas no sistema de mensageria
