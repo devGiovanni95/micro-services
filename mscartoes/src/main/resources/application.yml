@@ -22,10 +22,3 @@ eureka:
 mq:
   queues:
     emissao-cartoes: emissao-cartoes
-
-
-
-#    definindo as configurações para conexao com as filas de mensageria
-
-
-#Definindo as filas criadas no sistema de mensageria
