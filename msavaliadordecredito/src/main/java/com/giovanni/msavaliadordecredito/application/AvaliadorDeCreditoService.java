@@ -2,9 +2,11 @@ package com.giovanni.msavaliadordecredito.application;
 
 import com.giovanni.msavaliadordecredito.application.exception.DadosClienteNotFoundException;
 import com.giovanni.msavaliadordecredito.application.exception.ErroComunicacaoMicroservicesException;
+import com.giovanni.msavaliadordecredito.application.exception.ErroSolicitacaoCartaoException;
 import com.giovanni.msavaliadordecredito.domain.model.*;
 import com.giovanni.msavaliadordecredito.infra.clients.CartoesResourceClient;
 import com.giovanni.msavaliadordecredito.infra.clients.ClienteResourceClient;
+import com.giovanni.msavaliadordecredito.infra.mqueue.SolicitacaoEmissaoCartaoPublisher;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +24,7 @@ public class AvaliadorDeCreditoService{
 
     private final ClienteResourceClient clientesClient;
     private final CartoesResourceClient resourceClient;
+    private final SolicitacaoEmissaoCartaoPublisher emissaoCartaoPublisher;
 
     public SituacaoCliente obterSituacaoCliente(String cpf) throws DadosClienteNotFoundException, ErroComunicacaoMicroservicesException{
         //obter dados do cliente   //MSCLIENTES
@@ -84,6 +88,16 @@ public class AvaliadorDeCreditoService{
                 throw new DadosClienteNotFoundException();
             }
             throw new ErroComunicacaoMicroservicesException(e.getMessage(), status);
+        }
+    }
+    
+    public ProtocoloSolicitacaoCartao solicitarEmissaCartao(DadosSolicitacaoEmissaoCartao dados){
+        try {
+            emissaoCartaoPublisher.solicitarCartao(dados);
+            String protocolo = UUID.randomUUID().toString();
+            return new ProtocoloSolicitacaoCartao(protocolo);
+        }catch (Exception e){
+            throw new ErroSolicitacaoCartaoException(e.getMessage());
         }
     }
 }

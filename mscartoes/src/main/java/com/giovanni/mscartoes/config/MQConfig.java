@@ -1,4 +1,4 @@
-package com.giovanni.msavaliadordecredito.config;
+package com.giovanni.mscartoes.config;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
